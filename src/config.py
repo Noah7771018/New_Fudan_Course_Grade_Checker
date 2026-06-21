@@ -41,9 +41,10 @@ RECEIVER_EMAIL = (
 GRADES_FILE = os.environ.get("GRADES_FILE", "grades_encrypted.json")
 
 # ── Access mode ──────────────────────────────────────────────────────────
-# When true, route all requests through WebVPN (off-campus / CI runners).
-# When false, hit fdjwgl.fudan.edu.cn directly (on-campus / local test).
-USE_WEBVPN = os.environ.get("USE_WEBVPN", "").strip().lower() in ("1", "true", "yes")
+# Default ON: GitHub Actions / off-campus hosts cannot reach fdjwgl directly,
+# so WebVPN is the safe default.  Set USE_DIRECT=1 to bypass the VPN when
+# running on the campus network (e.g. local testing).
+USE_WEBVPN = os.environ.get("USE_DIRECT", "").strip().lower() not in ("1", "true", "yes")
 
 # ── Browser fingerprint ──────────────────────────────────────────────────
 USER_AGENT = (
